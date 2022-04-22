@@ -1,0 +1,47 @@
+
+#Configure a default setup of Home Assistant (frontend, api, etc)
+http:
+  use_x_forwarded_for: true
+  trusted_proxies: !secret trusted_proxies
+
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+  
+group: !include groups.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+  
+# Incluindo as automações
+automation: !include_dir_list automation
+
+# Incluindo as luzes
+light: !include_dir_list light
+  
+# Constumizacao
+homeassistant:
+  customize_glob: !include customize_glob.yaml
+  customize: !include customize.yaml
+
+# Alexa
+api:
+alexa:
+  smart_home: 
+
+# Arquivos do lovelace
+lovelace:
+  mode: yaml
+    
+# Temas
+frontend: 
+  themes: !include themes.yaml
+
+# Clima
+weather:
+  - platform: openweathermap
+    api_key: !secret openweathermap
+
+# Sensores
+sensor: !include sensor.yaml

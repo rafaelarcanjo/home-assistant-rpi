@@ -1,0 +1,21 @@
+alias: "Verificar luzes ao iniciar"
+trigger:
+- event: start
+  platform: homeassistant
+condition: []
+action:
+- service: mqtt.publish
+  data:
+    topic: cmnd/light/cozinha/bar/POWER
+- service: mqtt.publish
+  data:
+    topic: cmnd/light/cozinha/cooktop/POWER
+- service: mqtt.publish
+  data:
+    topic: cmnd/light/cozinha/lavanderia/POWER      
+- service: mqtt.publish
+  data:
+    topic: cmnd/light/escritorio/POWER
+- service: mqtt.publish
+  data:
+    topic: cmnd/light/sala/estar/POWER

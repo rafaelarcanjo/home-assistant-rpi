@@ -1,0 +1,12 @@
+# ESP8266
+# Cozinha/Bar
+platform: mqtt
+name: "Cozinha/Bar"
+command_topic: "cmnd/light/cozinha/bar/POWER"
+payload_on: "ON"
+payload_off: "OFF"
+payload_available: "Online"
+payload_not_available: "Offline"
+qos: 1
+retain: true
+state_topic: "stat/light/cozinha/bar/RESULT"

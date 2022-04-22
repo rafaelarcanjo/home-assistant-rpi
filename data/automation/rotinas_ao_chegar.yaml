@@ -1,0 +1,17 @@
+alias: 'Rotinas ao chegar'
+trigger:
+  platform: state
+  entity_id: device_tracker.rafael
+  from: 'not_home'
+  to: 'home'
+condition:
+  condition: and
+  conditions:
+    - condition: sun
+      after: sunset
+    - condition: state
+      entity_id: group.all_lights
+      state: 'off'
+action:
+  - service: light.turn_on
+    entity_id: light.cozinha_bar

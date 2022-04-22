@@ -1,0 +1,4 @@
+zone.home:
+  latitude: !secret latitude
+  longitude: !secret longitude
+  radius: 110

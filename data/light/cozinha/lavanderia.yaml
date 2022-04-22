@@ -1,0 +1,12 @@
+# ESP8266
+# Cozinha/Lavanderia
+platform: mqtt
+name: "Cozinha/Lavanderia"
+command_topic: "cmnd/light/cozinha/lavanderia/POWER"
+payload_on: "ON"
+payload_off: "OFF"
+payload_available: "Online"
+payload_not_available: "Offline"
+qos: 1
+retain: true
+state_topic: "stat/light/cozinha/lavanderia/RESULT"

@@ -1,0 +1,8 @@
+all_lights:
+  name: Todas as Luzes
+  entities:
+    - light.cozinha_bar
+    - light.cozinha_cooktop
+    - light.cozinha_lavanderia
+    - light.escritorio
+    - light.sala_estar

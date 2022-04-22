@@ -1,0 +1,13 @@
+# Sonoff Mini
+# Escritório
+platform: mqtt
+name: "Escritório"
+command_topic: "cmnd/light/escritorio/POWER"
+payload_on: "ON"
+payload_off: "OFF"
+payload_available: "Online"
+payload_not_available: "Offline"
+qos: 1
+retain: true
+state_topic: "stat/light/escritorio/RESULT"
+value_template: "{{ value_json.POWER }}"

@@ -1,0 +1,12 @@
+# ESP8266
+# Sala/Estar
+platform: mqtt
+name: "Sala/Estar"
+command_topic: "cmnd/DV_SalaEstar/Luz/POWER"
+payload_on: "ON"
+payload_off: "OFF"
+payload_available: "Online"
+payload_not_available: "Offline"
+qos: 1
+retain: true
+state_topic: "stat/DV_SalaEstar/Luz/RESULT"

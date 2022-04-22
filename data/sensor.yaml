@@ -1,0 +1,18 @@
+- platform: openweathermap
+  api_key: !secret openweathermap
+  monitored_conditions:
+    - rain
+
+- platform: time_date
+  display_options:
+    - 'time'
+    - 'date'
+
+- platform: yr
+  name: Weather
+  forecast: 24
+  monitored_conditions:
+    - temperature
+    - precipitation
+    - windSpeed
+    - humidity

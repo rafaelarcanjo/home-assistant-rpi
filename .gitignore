@@ -1,0 +1,5 @@
+secret.yaml
+/tcb/.terraform*
+/tcb/terraform.*
+secrets.yaml
+id_rsa

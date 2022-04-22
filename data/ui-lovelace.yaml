@@ -1,0 +1,76 @@
+title: Casa
+views:
+  - path: ''
+    title: Luzes
+    icon: 'mdi:lightbulb'
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            title: Sala de Estar
+            content:  |
+              {% if is_state('light.sala_estar', 'on') %} Ligada
+              {% else %} Desligada
+              {% endif %}
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Cozinha
+            entities:
+              - entity: light.cozinha_bar
+                name: Bar
+              - entity: light.cozinha_cooktop
+                name: Cooktop
+              - entity: light.cozinha_lavanderia
+                name: Lavanderia
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Escritório
+            entities:
+              - entity: light.escritorio
+                name: Escritório
+  - path: ''
+    title: Automações
+    icon: mdi:robot
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Automações
+            entities:
+              - entity: automation.verificar_luzes_ao_iniciar
+                name: Verificar luzes ao iniciar
+              - entity: automation.rotinas_ao_chegar
+                name: Rotinas ao chegar
+              - entity: automation.rotinas_ao_sair
+                name: Rotinas ao sair
+  - path: ''
+    title: Home Assistant
+    icon: mdi:home-assistant
+    badges:
+        - entity: binary_sensor.updater
+        - entity: person.administrador
+        - entity: person.iara
+        - entity: sensor.sm_j600gt_battery_level
+        - entity: sensor.sm_j600gt_battery_state
+        - entity: sensor.sm_j600gt_geocoded_location
+        - entity: sensor.sm_j600gt_wifi_connection
+        - entity: sensor.lenovo_k8_plus_battery_level
+        - entity: sensor.lenovo_k8_plus_battery_state
+        - entity: sensor.lenovo_k8_plus_geocoded_location
+        - entity: sensor.lenovo_k8_plus_wifi_connection
+        - entity: sun.sun
+        - entity: group.all_lights
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Speedtest
+            entities:
+              - entity: sensor.speedtest_download
+                name: Download
+              - entity: sensor.speedtest_upload
+                name: Upload
+              - entity: sensor.speedtest_ping
+                name: Ping
