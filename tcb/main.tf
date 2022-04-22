@@ -36,4 +36,10 @@ resource "aws_instance" "tcb_build-ec2" {
   tags = {
     Name = "tcb-build-ecs"
   }
+
+  user_data = <<-EOF
+              #!/bin/bash
+              apt-get update
+              apt-get upgrade
+              EOF
 }
