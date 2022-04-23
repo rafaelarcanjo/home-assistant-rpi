@@ -1,4 +1,4 @@
-name: "Terraform"
+name: "Build"
 
 on:
   push:
@@ -6,9 +6,12 @@ on:
       - master
   
 jobs:
-  terraform:
+  Terraform:
     runs-on: ubuntu-latest
     name: Terraform
+
+    outputs:
+      public_ip: ${{ steps.exposeIP.outputs.public_ip }}
 
     defaults:
       run:
@@ -31,9 +34,6 @@ jobs:
     - name: Terraform Init
       id: init
       run: terraform init
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Terraform Validate
       id: validate
@@ -42,6 +42,17 @@ jobs:
     - name: Terraform Apply
       id: apply
       run: terraform apply -auto-approve
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Terraform Show
+      id: show
+      run: terraform show > $PUBLIC_IP
+
+    - name: Expose public IP
+      id: exposeIP
+      run: echo "::set-output name=public_ip::${{ env.PUBLIC_IP }}"
+
+  Provision:
+    needs: Terraform
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ${{ needs.Terraform.outputs.public_ip }}
