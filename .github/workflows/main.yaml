@@ -45,11 +45,11 @@ jobs:
 
     - name: Terraform Show
       id: show
-      run: terraform show > $PUBLIC_IP
+      run: terraform show | grep ^public_ip | cut -d'"' -f2 > PUBLIC_IP
 
     - name: Expose public IP
       id: exposeIP
-      run: echo "::set-output name=public_ip::${{ env.PUBLIC_IP }}"
+      run: echo "::set-output name=public_ip::$(cat PUBLIC_IP)"
 
   Provision:
     needs: Terraform
