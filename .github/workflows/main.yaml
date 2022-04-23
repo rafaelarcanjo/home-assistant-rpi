@@ -60,10 +60,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    # - run: echo ${{ needs.Terraform.outputs.public_ip }}
-    - name: Verificando aonde estou
-      run: pwd && ls -lah
-
     - name: Ansible Provision
       id: ansible
       uses: dawidd6/action-ansible-playbook@v2
@@ -77,3 +73,15 @@ jobs:
         options: |
           --inventory .hosts
           -u admin
+
+  Docker:
+    needs: [Terraform, Ansible]
+    name: Docker
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Docker Build
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -t rsa ${{ needs.Terraform.outputs.public_ip }} >> ~/.ssh/known_hosts
+        DOCKER_HOST=ssh://admin@${{ needs.Terraform.outputs.public_ip }} docker ps
