@@ -76,5 +76,4 @@ jobs:
           ${{ needs.Terraform.outputs.public_ip }}
         options: |
           --inventory .hosts
-          --verbose
           -u admin
