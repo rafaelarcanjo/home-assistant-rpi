@@ -80,8 +80,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Docker Build
-      run: |
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - uses: arwynfr/actions-docker-context@v2
+      with:
+        docker_host: "ssh://admin@${{ needs.Terraform.outputs.public_ip }}"
+        context_name: 'home-assistant-build'
+        ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - run: |
         mkdir -p ~/.ssh
-        ssh-keyscan -t rsa ${{ needs.Terraform.outputs.public_ip }} >> ~/.ssh/known_hosts
-        DOCKER_HOST=ssh://admin@${{ needs.Terraform.outputs.public_ip }} docker ps
+        ssh-keyscan -H ${{ needs.Terraform.outputs.public_ip }} >> ~/.ssh/known_hosts 2>/dev/null
+        docker --context home-assistant-build container ls -a
+        docker --context home-assistant-build build . -t rafaelarcanjo/home-assistant:latest
+        docker --context home-assistant-build image ls
