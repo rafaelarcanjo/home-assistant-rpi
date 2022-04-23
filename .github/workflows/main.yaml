@@ -55,4 +55,15 @@ jobs:
     needs: Terraform
     runs-on: ubuntu-latest
     steps:
-    - run: echo ${{ needs.Terraform.outputs.public_ip }}
+    # - run: echo ${{ needs.Terraform.outputs.public_ip }}
+    - uses: dawidd6/action-ansible-playbook@v2
+      with:
+        playbook: ./provision/ansible.yaml
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        inventory: |
+          [all]
+          ${{ needs.Terraform.outputs.public_ip }}
+        options: |
+          --inventory .hosts
+          --verbose
+          -u admin

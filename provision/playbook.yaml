@@ -17,4 +17,31 @@
         - curl
         - python3-pip
 
+    - name: Adiciona key do repositório
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+    - name: Adiciona repositorio oficial do Docker
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+        state: present
+        
+    - name: Instala Docker
+      apt:
+        name: "docker-ce"
+        state: latest
+  
+    - name: Adiciona o usuario vagrant no grupo docker
+      user:
+        name: admin
+        group: docker
     
+    - name: Habilita o BuildKit
+      shell: |
+        echo '{ "features": { "buildkit": true } }' > /etc/docker/daemon.json
+
+    - name: Reinicia o Docker
+      service:
+        name: docker
+        state: restarted
