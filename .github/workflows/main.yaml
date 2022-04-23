@@ -51,14 +51,25 @@ jobs:
       id: exposeIP
       run: echo "::set-output name=public_ip::$(cat PUBLIC_IP)"
 
-  Provision:
+  Ansible:
     needs: Terraform
+    name: Ansible
     runs-on: ubuntu-latest
+
     steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
     # - run: echo ${{ needs.Terraform.outputs.public_ip }}
-    - uses: dawidd6/action-ansible-playbook@v2
+    - name: Verificando aonde estou
+      run: pwd && ls -lah
+
+    - name: Ansible Provision
+      id: ansible
+      uses: dawidd6/action-ansible-playbook@v2
       with:
-        playbook: ./provision/ansible.yaml
+        playbook: playbook.yaml
+        directory: provision
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         inventory: |
           [all]
