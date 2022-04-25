@@ -83,15 +83,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - uses: arwynfr/actions-docker-context@v2
+    - name: Docker Configure
+      uses: arwynfr/actions-docker-context@v2
       with:
         docker_host: "ssh://admin@${{ needs.Terraform.outputs.public_ip }}"
         context_name: 'home-assistant-build'
         ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - run: |
+    - name: Docker Build
+      run: |
         mkdir -p ~/.ssh
         ssh-keyscan -H ${{ needs.Terraform.outputs.public_ip }} >> ~/.ssh/known_hosts 2>/dev/null
         docker --context home-assistant-build container ls -a
-        docker --context home-assistant-build build . -t rafaelarcanjo/home-assistant:latest
-        docker --context home-assistant-build image ls
+        docker --context home-assistant-build build . -t ${{ secrets.DOCKER_LOGIN }}/home-assistant:latest
+        docker --context home-assistant-build build . -t ${{ secrets.DOCKER_LOGIN }}/home-assistant:$(date "+%Y%m%d")
+        docker --context home-assistant-build login -u="${{ secrets.DOCKER_LOGIN }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+        docker --context home-assistant-build push ${{ secrets.DOCKER_LOGIN }}/home-assistant:latest
+        docker --context home-assistant-build push ${{ secrets.DOCKER_LOGIN }}/home-assistant:$(date "+%Y%m%d")
