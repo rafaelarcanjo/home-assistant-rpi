@@ -1,4 +1,4 @@
-FROM --platform=linux/arm/v7 alpine:3.13
+FROM --platform=linux/arm/v7 alpine:3.12
 
 LABEL maintainer="Rafael Arcanjo <rafael@libre.tec.br>"
 LABEL Description="Home Assistant"
