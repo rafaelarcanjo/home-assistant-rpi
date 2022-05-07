@@ -3,3 +3,5 @@ secret.yaml
 /tcb/terraform.*
 secrets.yaml
 id_rsa
+inventory.ini
+terraform.tfstate

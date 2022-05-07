@@ -1,4 +1,4 @@
-FROM alpine:3.13
+FROM --platform=linux/arm/v7 alpine:3.13
 
 LABEL maintainer="Rafael Arcanjo <rafael@libre.tec.br>"
 LABEL Description="Home Assistant"
@@ -60,8 +60,6 @@ RUN pip3 install --no-cache-dir homeassistant=="${VERSION}" \
     && rm -rf /tmp/* \
         /var/tmp/* \
         /var/cache/apk/*
-
-COPY data /data
 
 VOLUME [ "/data" ]
 
